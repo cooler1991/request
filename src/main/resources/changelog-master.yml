@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: scheme-permission.yaml
+      relativeToChangelogFile: true

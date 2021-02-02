@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: services/app
+      dockerfile: Dockerfile
+    depends_on:
+      - postgresql
+    environment:
+      - JAVA_ARGS=
+        --spring.datasource.url=jdbc:postgresql://postgresql:5432/request_n
+        --spring.datasource.username=postgres
+        --spring.datasource.password=user
+    ports:
+      - 8080:8080
+  postgresql:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=request_n
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=user
+    volumes:
+          - "db-data:/var/lib/postgresql/data"
+        
+volumes:
+  db-data:

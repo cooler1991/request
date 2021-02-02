@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2019-04-15-perm-1
+      author: egorov
+      changes:
+        - createTable:
+            tableName: comment
+            columns:
+              - column:
+                  autoIncrement: true
+                  name: id
+                  type: serial not null
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: text
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: request_id
+                  type: integer
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: request
+            columns:
+              - column:
+                  autoIncrement: true
+                  name: id
+                  type: serial not null
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: describe
+                  type: varchar(100)
+              - column:
+                  name: status
+                  type: varchar(25)
+

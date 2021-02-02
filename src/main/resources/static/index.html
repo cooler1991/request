@@ -1,0 +1,129 @@
+<meta charset=utf-8>
+<!DOCTYPE>
+
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+
+
+<h2>Заявки</h2>
+
+<table id="requestsList">
+
+</table>
+
+<form action="#">
+    <input id="request_describe" placeholder="Request describe">
+    <button onclick="createRequest()">Создать заявку</button>
+</form>
+
+<script>
+    var listStatus;
+   // getListStatus();
+    function getListStatus() {
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onload = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+              listStatus = JSON.parse( this.responseText);
+            }
+        }
+        xhttp.open("GET", "http://localhost:8080/request/getListStatus", true);
+        xhttp.send();
+        console.log( listStatus);
+    }
+/*
+        for (var i=0;i<listStatus.length;i++) {
+            console.log(listStatus[i]);
+        }
+    }*/
+
+
+    function deleteRequest(requestId) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("DELETE", "http://localhost:8080/request/delete/" + requestId, true);
+        xhttp.send();
+        window.location.reload();
+    }
+    function updateStatus(requestId) {
+        console.log("UPDATE");
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("PUT", "http://localhost:8080/request/update_status/" + requestId, true);
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(JSON.stringify({status: 'В работе'}));
+        console.log("UPDATE");
+    }
+
+
+    function createRequest() {
+        var requestDescribe = document.getElementById("request_describe").value;
+//        var requestStatus = document.getElementById("request_status").value;
+
+        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+        xmlhttp.open("POST", "http://localhost:8080/request/create");
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(JSON.stringify({describe: requestDescribe }));
+        console.log("CREATE");
+      //  window.location.reload();
+        loadRequests();
+    }
+
+
+    function loadRequests() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var requests = JSON.parse(this.responseText);
+                var html = '<tr>\n' +
+                    '        <th>№ Заявки</th>\n' +
+                    '        <th>Описание</th>\n' +
+                    '        <th>Статус</th>\n' +
+                    '        <th></th>\n' +
+                    '    </tr>';
+                for (var i = 0; i < requests.length; i++) {
+                    var request = requests[i];
+                    console.log(request);
+                    html = html + '<tr><td>' + request.id + '</td>\n' +
+                        '        <td>' + request.describe + '</td>\n' +
+                        '        <td><select><option>' + request.status + '</option>' +
+                        '<option>' + 'В работе'+ '</option>' +
+                        '<option>' + 'Выполнена'+ '</option>' +
+                        '<option>' + 'Отклонена'+ '</option>';
+                    //  for (var j=0;i<listStatus.length;j++) {
+                     //      html = html +   '<option>' + listStatus[j] + '</option>'
+                   //   }
+                    html = html +   '</select></td>\n' +
+                     //   ' <td><button onClick="updateStatus(' + request.id + ')">Обновить статус</button> </td>' +
+                        '<td><button onClick="updateStatus('+ 1 +')">Обновить статус</button> '+
+                        '<button onclick="deleteRequest(' + request.id + ')">Удалить</button></td></tr></td>' ;
+
+                }
+                document.getElementById("requestsList").innerHTML = html;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8080/request/findAll", true);
+        xhttp.send();
+    }
+
+    loadRequests();
+</script>
+</body>
+</html>
