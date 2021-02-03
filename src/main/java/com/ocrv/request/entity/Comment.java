@@ -17,7 +17,7 @@ public class Comment {
     @Column
     private String text;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "request_id")
     private Request request;
 

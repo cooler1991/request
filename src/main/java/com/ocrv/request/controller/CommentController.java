@@ -35,7 +35,7 @@ public class CommentController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteRequest(@PathVariable("id") int id){
+    public void deleteComment(@PathVariable("id") int id){
         log.info("Handling delete comment: " + id);
         commentService.delete(id);
     }
