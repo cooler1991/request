@@ -49,26 +49,22 @@ public class RequestController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public RequestDto createRequest(@RequestBody RequestDto requestDto ) throws ValidationException {
+        log.info("Handling  Create");
         return requestService.create(requestDto);
     }
-   /*
-    @PostMapping("/create1")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Request createCountry(@RequestBody Request request) {
-        return requestService.create1(request);
-    }
-*/
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteRequest(@PathVariable("id") int id){
+        log.info("Handling  DELETE");
         requestService.delete(id);
     }
 
     @PutMapping("/update_status/{id}")
     public RequestDto updateStatus(@PathVariable("id") int id, @RequestBody RequestDto requestDto )
     {
-     return requestService.update_status(id,requestDto);
+        log.info("Handling  update_status");
+        return requestService.update_status(id,requestDto);
     }
 
 

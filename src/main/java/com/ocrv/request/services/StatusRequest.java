@@ -19,7 +19,6 @@ public enum StatusRequest {
     private String describe;
 
 
-
     StatusRequest(String name, String describe) {
         this.name = name;
         this.describe = describe;
@@ -53,7 +52,7 @@ public enum StatusRequest {
     public static  List getListStatus(){
        List list = new ArrayList() ;
         for (StatusRequest  es : StatusRequest .values()) {
-            list.add(es);
+            list.add(es.describe);
         }
         return list;
 

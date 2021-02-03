@@ -9,21 +9,19 @@ import org.springframework.stereotype.Component;
 public class CommentConverter {
 
     public Comment fromCommentDtoToComment(CommentDto commentDto)  {
-        RequestConverter conv = new RequestConverter();
 
         Comment comment = new Comment();
         comment.setId(commentDto.getId());
         comment.setText(commentDto.getText() );
-        comment.setRequest(conv.fromRequestDtoToRequest(commentDto.getRequest()));
+        comment.setRequest(commentDto.getRequest());
         return comment;
     }
 
     public CommentDto fromCommentToCommentDto(Comment comment) {
-       RequestConverter  conv = new RequestConverter();
         return CommentDto.builder()
                 .id(comment.getId())
                 .text(comment.getText())
-                .request(conv.fromRequestToRequestDto(comment.getRequest()))
+                .request(comment.getRequest())
                 .build();
 
     }

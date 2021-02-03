@@ -27,11 +27,6 @@ public class RequestService {
     private final RequestConverter requestConverter;
 
 
-  /*  public RequestDto save(RequestDto requestDto) {
-        Request savedRequest = requestRepository.save( requestConverter.fromRequestDtoToRequest(requestDto));
-        return requestConverter.fromRequestToRequestDto(savedRequest);
-
-    }*/
     public RequestDto findById(int id) {
         Request request = requestRepository.findById(id);
         if (request!= null) {
@@ -39,7 +34,6 @@ public class RequestService {
         }
             return null;
         }
-
 
     public List<RequestDto> findAll() {
         return requestRepository.findAll()
@@ -52,13 +46,13 @@ public class RequestService {
         validateRequestDto(requestDto);
         //При создании всегда статус Новый
         requestDto.setStatus(StatusRequest.NEW.getDescribe());
-
- /*      if (requestDto.getComments() != null) {
-           for (CommentDto comment : requestDto.getComments()) {
-               comment.setRequest(requestConverter.fromRequestDtoToRequest(requestDto));
+        Request request =  requestConverter.fromRequestDtoToRequest(requestDto);
+      if (request.getComments() != null) {
+           for (Comment comment : request.getComments()) {
+               comment.setRequest(request);
            }
-       }*/
-       Request saveRequest =  requestRepository.save(requestConverter.fromRequestDtoToRequest(requestDto)); ;
+       }
+       Request saveRequest =  requestRepository.save(request); ;
         return requestConverter.fromRequestToRequestDto(saveRequest);
     }
 

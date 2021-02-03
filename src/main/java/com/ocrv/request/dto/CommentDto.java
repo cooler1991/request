@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 public class CommentDto {
     private Integer id;
     private String text;
-    private RequestDto request;
+    private Request request;
     @JsonIgnore
-    public RequestDto getRequest() {
+    public Request getRequest() {
         return request;
     }
 }
