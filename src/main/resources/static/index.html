@@ -63,13 +63,12 @@
         xhttp.send();
         window.location.reload();
     }
-    function updateStatus(requestId) {
+    function updateStatus(requestId, id_status) {
         console.log("UPDATE");
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("PUT", "http://localhost:8080/request/update_status/" + requestId, true);
+        var xmlhttp= new XMLHttpRequest();
+        xmlhttp.open("PUT", "http://localhost:8080/request/update_status/" + requestId, true);
         xmlhttp.setRequestHeader("Content-Type", "application/json");
-        xmlhttp.send(JSON.stringify({status: 'В работе'}));
-        console.log("UPDATE");
+        xmlhttp.send(JSON.stringify({status: id_status}))
     }
 
 
@@ -110,10 +109,9 @@
                     //  for (var j=0;i<listStatus.length;j++) {
                      //      html = html +   '<option>' + listStatus[j] + '</option>'
                    //   }
-                    html = html +   '</select></td>\n' +
+                    html = html +   '</select><button onclick="updateStatus('+ request.id + ', '+ request.status   +')">Обновить</button> </td>\n' +
                      //   ' <td><button onClick="updateStatus(' + request.id + ')">Обновить статус</button> </td>' +
-                        '<td><button onClick="updateStatus('+ 1 +')">Обновить статус</button> '+
-                        '<button onclick="deleteRequest(' + request.id + ')">Удалить</button></td></tr></td>' ;
+                        '<td><button onclick="deleteRequest(' + request.id + ')">Удалить</button></td></tr></td>' ;
 
                 }
                 document.getElementById("requestsList").innerHTML = html;
