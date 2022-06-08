@@ -39,13 +39,3 @@ databaseChangeLog:
               - column:
                   name: status
                   type: varchar(25)
-  - changeSet:
-      id: 2
-      author: bosyh
-      changes:
-        addColumn:
-          tableName: comment
-          columns:
-            - column:
-                name: test_n
-                type: varchar(1)
