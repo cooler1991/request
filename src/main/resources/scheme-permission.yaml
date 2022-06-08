@@ -39,4 +39,3 @@ databaseChangeLog:
               - column:
                   name: status
                   type: varchar(25)
-
